@@ -5,7 +5,7 @@ function fetchJSON(){
          url: "/control/status",
          success: function(data){
              console.log(data);
-             alert(data.status);
+
          }
      })
 };
