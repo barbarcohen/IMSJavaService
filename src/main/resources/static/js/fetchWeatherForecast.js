@@ -19,9 +19,11 @@ function updateWeatherForecast() {
         $(curr_temp_key).text("18 °C");
     }
     
-    var weatherList = ["clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night"];
+    var weatherListNextDays = ["clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night", "clear-night"];
     
-    renderWeatherIcons(weatherList);
+    var weatherListTomorrow = ["clear-night"];
+    
+    renderWeatherIcons(weatherListTomorrow, weatherListNextDays);
 };
 
 
@@ -34,7 +36,11 @@ function getDummyJson() {
     return '{"nextWateringDate":1473769468250,"status":"stopped"}';
 }
 
-function renderWeatherIcons(weatherList) {
+function getNextDays(){
+    // var days = ["Mon"]
+}
+
+function renderWeatherIcons(weatherTomorrow, weatherNextDays) {
     var icons = new Skycons({
             "color": "#fcb216"
         }),
@@ -44,7 +50,7 @@ function renderWeatherIcons(weatherList) {
         i;
 
     for (i = list.length; i--;)
-        icons.set(list[i], list[i]);
+        icons.set(list[i], list[i % list.length]);
     icons.play();
 
     var icons = new Skycons({
@@ -56,8 +62,8 @@ function renderWeatherIcons(weatherList) {
         i;
 
     for (i = list.length; i--;)
-        icons.set(list[i], weatherList[i]);
+        icons.set(list[i], weatherNextDays[i  % list.length]);
     icons.play();
 }
 
-$( document).ready(updateWeatherForecast());
+$(document).ready(updateWeatherForecast());

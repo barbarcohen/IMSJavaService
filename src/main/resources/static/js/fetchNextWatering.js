@@ -20,7 +20,7 @@ function getWateringJson() {
     });
 }
 
-function wateringControl(onOffURL, watering) {
+function wateringControl(watering) {
     controlURL = "";
 
     if (watering) {
@@ -32,11 +32,13 @@ function wateringControl(onOffURL, watering) {
     $.ajax({
         type: "PUT",
         dataType: "json",
-        url: onOffURL,
+        url: controlURL,
         success: function() {
             alert("Switched the watering " + (watering ? "on" : "off"));
         }
     });
+    
+    alert("blbl");
 }
 
 function getDummyJson() {
@@ -51,4 +53,5 @@ function updateNextWatering() {
     $("#watering_table tr:last td:first").before("<td><h3>Watering: " + obj.status + "</h3></td>");
 };
 
-$( document).ready(updateNextWatering());
+
+$(document).ready(updateNextWatering());
