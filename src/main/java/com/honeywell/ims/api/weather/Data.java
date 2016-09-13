@@ -14,6 +14,37 @@ public class Data {
 	@JsonProperty(value = "main")
 	private MainData mainData;
 
+	private Clouds clouds;
+
+	private Rain rain = new Rain();
+
+	@JsonProperty(value = "dt_txt")
+	private String dateText;
+
+	public String getDateText() {
+		return dateText;
+	}
+
+	public void setDateText(final String dateText) {
+		this.dateText = dateText;
+	}
+
+	public Clouds getClouds() {
+		return clouds;
+	}
+
+	public void setClouds(final Clouds clouds) {
+		this.clouds = clouds;
+	}
+
+	public Rain getRain() {
+		return rain;
+	}
+
+	public void setRain(final Rain rain) {
+		this.rain = rain;
+	}
+
 	public Date getDt() {
 		return dt;
 	}

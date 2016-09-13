@@ -15,10 +15,14 @@ import com.honeywell.ims.service.ForecastService;
 public class ForecastResource {
 
 	@Autowired
-	private ForecastService service;
+	private ForecastService forecastService;
 
 	@RequestMapping("/actual")
-	public Forecast getActual(){
-		return service.getActualForecast();
+	public Forecast getActual() {
+		Forecast forecast = forecastService.getLatestForecast();
+		if (forecast == null) {
+			forecast = forecastService.fetchForecast();
+		}
+		return forecast;
 	}
 }
