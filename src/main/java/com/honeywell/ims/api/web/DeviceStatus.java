@@ -7,11 +7,21 @@ import com.honeywell.ims.enums.WateringStatus;
 /**
  * Created by h134602 on 9/12/2016.
  */
-public class Watering {
+public class DeviceStatus {
 
 	private Date nextWateringDate;
 
 	private WateringStatus status;
+
+	private double humidity;
+
+	public double getHumidity() {
+		return humidity;
+	}
+
+	public void setHumidity(final double humidity) {
+		this.humidity = humidity;
+	}
 
 	public Date getNextWateringDate() {
 		return nextWateringDate;

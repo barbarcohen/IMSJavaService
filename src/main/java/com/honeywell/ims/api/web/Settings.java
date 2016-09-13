@@ -7,22 +7,22 @@ import java.util.Date;
  */
 public class Settings {
 
-	private long id;
+	private String deviceId;
 
 	private Date nextWatering;
 
-	private long wateringDuration;//in seconds
+	private long wateringDuration;
 
-	private int minHumidityTreshold;
+	private int minHumidityThreshold;
 
-	private boolean dummyWeatherMode;
+	private boolean forceIrrigation;
 
-	public int getMinHumidityTreshold() {
-		return minHumidityTreshold;
+	public String getDeviceId() {
+		return deviceId;
 	}
 
-	public void setMinHumidityTreshold(final int minHumidityTreshold) {
-		this.minHumidityTreshold = minHumidityTreshold;
+	public void setDeviceId(final String deviceId) {
+		this.deviceId = deviceId;
 	}
 
 	public Date getNextWatering() {
@@ -41,20 +41,19 @@ public class Settings {
 		this.wateringDuration = wateringDuration;
 	}
 
-	public boolean isDummyWeatherMode() {
-
-		return dummyWeatherMode;
+	public int getMinHumidityThreshold() {
+		return minHumidityThreshold;
 	}
 
-	public void setDummyWeatherMode(final boolean dummyWeatherMode) {
-		this.dummyWeatherMode = dummyWeatherMode;
+	public void setMinHumidityThreshold(final int minHumidityThreshold) {
+		this.minHumidityThreshold = minHumidityThreshold;
 	}
 
-	public long getId() {
-		return id;
+	public boolean isForceIrrigation() {
+		return forceIrrigation;
 	}
 
-	public void setId(final long id) {
-		this.id = id;
+	public void setForceIrrigation(final boolean forceIrrigation) {
+		this.forceIrrigation = forceIrrigation;
 	}
 }

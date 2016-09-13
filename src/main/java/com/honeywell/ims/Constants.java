@@ -5,8 +5,8 @@ package com.honeywell.ims;
  */
 public interface Constants {
 
-	String WATERING_STOP_URL = "http://imsred.mybluemix.net/public/command/waterstart";
-	String WATERING_START_URL = "http://imsred.mybluemix.net/public/command/waterstop";
+	String WATERING_STOP_URL = "http://imsred.mybluemix.net/public/command/waterstop";
+	String WATERING_START_URL = "http://imsred.mybluemix.net/public/command/waterstart";
 	String FORECAST_URL = "http://api.openweathermap.org/data/2.5/forecast?id=3078610&APPID="+Constants.FORECAST_API_KEY;
 	String FORECAST_API_KEY = "76689c24d33b982520e19e323e4f8add";
 
@@ -16,5 +16,5 @@ public interface Constants {
 
 	int WATERING_TIME_THRESHOLD = 1 * 60 * 1000;//1 minute
 
-	int FORECAST_CHECK_RATE = 1 * 60 * 1000;//1
+	int FORECAST_CHECK_RATE = 15 * 60 * 1000;//15 minutes
 }

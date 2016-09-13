@@ -10,8 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.honeywell.ims.Constants;
 import com.honeywell.ims.api.device.WateringCommand;
-import com.honeywell.ims.api.web.Watering;
-import com.honeywell.ims.enums.Command;
+import com.honeywell.ims.api.web.DeviceStatus;
 import com.honeywell.ims.dao.SettingsDao;
 import com.honeywell.ims.dao.WateringDao;
 import com.honeywell.ims.domain.UserSettings;
@@ -31,42 +30,17 @@ public class WateringService {
 	@Autowired
 	private WateringDao wateringDao;
 
-	public Watering getWateringStatus() {
-		Watering watering = new Watering();
+	public DeviceStatus getWateringStatus() {
+		DeviceStatus deviceStatus = new DeviceStatus();
 		UserSettings userSettings = settingsDao.getUserSettings(null);
-		watering.setNextWateringDate(userSettings.getNextWatering());
-		watering.setStatus(wateringDao.getStatus());
+		deviceStatus.setNextWateringDate(userSettings.getNextWatering());
+		deviceStatus.setStatus(wateringDao.getStatus());
 
-		logger.info("Requesting watering status: {} ", watering);
+		logger.info("Requesting watering status: {} ", deviceStatus);
 
-		return watering;
+		return deviceStatus;
 	}
 
-	/**
-	 * @return true if command was executed correctly, FALSE otherwise
-	 */
-	public boolean runCommand(final String commandValue) {
-		Command command = findCommandForKey(commandValue);
-		if (command == null) {
-			logger.info("Command does not exists! Nothing executed.");
-			return false;
-		}
-
-		switch (command) {
-			case on:
-				logger.info("Executing ON command");
-				//get the settings
-				UserSettings settings = settingsDao.getUserSettings(null);
-				return startWatering(new WateringCommand(settings.getWateringDuration()));
-			case off:
-				logger.info("Executing OFF command");
-
-				return stopWatering(new WateringCommand());
-			default:
-				break;
-		}
-		return false;
-	}
 
 	/**
 	 * Request DEVICE to START watering
@@ -104,14 +78,5 @@ public class WateringService {
 		return isSuccess;
 	}
 
-	private Command findCommandForKey(String value) {
-		try {
-			Command commandEnum = Command.valueOf(value);
-			return commandEnum;
-		} catch (IllegalArgumentException e) {
-			logger.error("Unknown command: {}", value);
-		}
-		return null;
-	}
 
 }

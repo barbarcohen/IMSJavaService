@@ -15,6 +15,8 @@ public class UserSettings {
 
 	private int minHumidityThreshold;
 
+	private boolean forceIrrigation;
+
 	public static UserSettings createDefault() {
 		return new UserSettings(null, null, 0);
 	}
@@ -26,6 +28,14 @@ public class UserSettings {
 		this.nextWatering = nextWatering;
 		this.deviceId = deviceId;
 		this.wateringDuration = wateringDuration;
+	}
+
+	public boolean isForceIrrigation() {
+		return forceIrrigation;
+	}
+
+	public void setForceIrrigation(final boolean forceIrrigation) {
+		this.forceIrrigation = forceIrrigation;
 	}
 
 	public Date getNextWatering() {

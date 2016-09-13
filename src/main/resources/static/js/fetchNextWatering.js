@@ -11,13 +11,13 @@ function startCountDown(watering_date) {
     });
 }
 
-function getWateringJson() {
+function getWateringJson(callback) {
     $.ajax({
         type: "GET",
         dataType: "json",
         url: "/control/status",
-        success: function() {
-            return data;
+        success: function(data) {
+            callback(data)
         }
     });
 }
@@ -48,19 +48,19 @@ function getDummyJson() {
 }
 
 function updateNextWatering() {
-    var json = getWateringJson();
-    
-    obj = JSON.parse(json);
-    
-    var date = new Date(parseInt(obj.nextWateringDate));
-    if(obj.status === "running"){
-        wateringStatus = true;
-    } else {
-        wateringStatus = false;
-    }
+    var json = getWateringJson(function(obj){
+        var date = new Date(parseInt(obj.nextWateringDate));
+        if(obj.status === "running"){
+            wateringStatus = true;
+        } else {
+            wateringStatus = false;
+        }
 
-    startCountDown(date);
-    $("#watering_status").text("Watering: " + obj.status);
+        startCountDown(date);
+        $("#watering_status").text("Watering: " + obj.status);
+    });
+    
+
 };
 
 
