@@ -8,9 +8,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.honeywell.ims.Constants;
 import com.honeywell.ims.api.weather.Forecast;
+import com.honeywell.ims.api.web.Settings;
 import com.honeywell.ims.dao.ForecastDao;
 import com.honeywell.ims.domain.RainProbability;
-import com.honeywell.ims.domain.UserSettings;
 
 @Component
 public class ForecastService {
@@ -21,7 +21,7 @@ public class ForecastService {
 	private ForecastDao forecastDao;
 
 	public Forecast fetchForecast() {
-		logger.debug("Requesting fresh forecast from URL: {} ", Constants.FORECAST_URL);
+		logger.info("Requesting fresh forecast from URL: {} ", Constants.FORECAST_URL);
 
 		RestTemplate restTemplate = new RestTemplate();
 		Forecast forecast = restTemplate.getForObject(Constants.FORECAST_URL, Forecast.class);
@@ -31,8 +31,12 @@ public class ForecastService {
 	}
 
 	public Forecast getLatestForecast(){
+		logger.info("Requesting cached forecast data");
+
 		Forecast forecast = forecastDao.getLatestForecast();
 		if(forecast == null){
+			logger.info("Forecast not cached yet. Going for fresh one... ");
+
 			forecast = fetchForecast();
 		}
 		return forecast;
@@ -42,7 +46,7 @@ public class ForecastService {
 	 *
 	 * @return TRUE if should rain, FALSE otherwise
 	 */
-	public RainProbability getRainProbability(UserSettings settings){
+	public RainProbability getRainProbability(Settings settings){
 		Forecast forecast = getLatestForecast();
 		//TODO get from foreccaast data
 		return new RainProbability(50,10);

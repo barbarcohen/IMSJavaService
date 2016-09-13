@@ -18,11 +18,15 @@ public class ForecastResource {
 	private ForecastService forecastService;
 
 	@RequestMapping("/actual")
-	public Forecast getActual() {
+	public Forecast getAll() {
 		Forecast forecast = forecastService.getLatestForecast();
 		if (forecast == null) {
 			forecast = forecastService.fetchForecast();
 		}
 		return forecast;
+	}
+
+	public void getRainProbability(){
+
 	}
 }

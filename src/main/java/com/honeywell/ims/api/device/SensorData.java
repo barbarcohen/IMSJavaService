@@ -6,7 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.honeywell.ims.api.web.DeviceStatus;
+import com.honeywell.ims.api.web.DeviceData;
 import com.honeywell.ims.enums.WateringStatus;
 
 /**
@@ -33,16 +33,36 @@ public class SensorData {
 		return new SensorDataDoc();
 	}
 
-	public DeviceStatus convertToDeviceStatus() {
+	//FIXME this should  be somewhere else
+	public DeviceData convertToDeviceData() {
 		SensorDataDoc sensorData = null;
 		if (CollectionUtils.isNotEmpty(rows)) {
 			sensorData = rows.get(0).getDocumentData();
+		} else {
+			sensorData = new SensorDataDoc();
 		}
-		sensorData = new SensorDataDoc();
-		DeviceStatus status = new DeviceStatus();
+		DeviceData status = new DeviceData();
 		status.setStatus(sensorData.isRunning() ? WateringStatus.RUNNING : WateringStatus.STOPPED);
-		status.setHumidity(sensorData.getHumidity());
+		status.setHumidity(convertHumidity(sensorData.getHumidityOriginal()));
 		return status;
 	}
+	//FIXME this is original  Humidity:100%; Relay:0%;, \r\n\n
+	private double convertHumidity(String humidityOriginal){
+		if(humidityOriginal != null){
+			int start = humidityOriginal.indexOf("Humidity:");
+			int end = humidityOriginal.indexOf("%");
+			try {
+				return Double.valueOf(humidityOriginal.substring(start+"Humidity:".length(), end)).doubleValue();
+			}catch (NumberFormatException e){
+			}
+		}
+		return 0;
+	}
 
+	@Override
+	public String toString() {
+		return "SensorData{" +
+			"rows=" + rows +
+			'}';
+	}
 }

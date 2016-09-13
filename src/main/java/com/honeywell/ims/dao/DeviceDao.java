@@ -2,7 +2,7 @@ package com.honeywell.ims.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.honeywell.ims.api.device.SensorData;
+import com.honeywell.ims.api.web.DeviceData;
 
 /**
  * Created by h134602 on 9/13/2016.
@@ -10,13 +10,13 @@ import com.honeywell.ims.api.device.SensorData;
 @Repository
 public class DeviceDao {
 
-	private SensorData deviceData = null;
+	private DeviceData deviceData = null;
 
-	public void saveDeviceData(SensorData deviceData){
+	public void saveDeviceData(DeviceData deviceData) {
 		this.deviceData = deviceData;
 	}
 
-	public SensorData getDeviceData(final String id){
+	public DeviceData getDeviceData(final String id) {
 		return this.deviceData;
 	}
 }

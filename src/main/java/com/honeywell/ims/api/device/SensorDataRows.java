@@ -17,4 +17,11 @@ public class SensorDataRows {
 	public void setDocumentData(final SensorDataDoc documentData) {
 		this.documentData = documentData;
 	}
+
+	@Override
+	public String toString() {
+		return "SensorDataRows{" +
+			"documentData=" + documentData +
+			'}';
+	}
 }

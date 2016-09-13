@@ -3,16 +3,18 @@ package com.honeywell.ims.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.honeywell.ims.Constants;
 import com.honeywell.ims.api.device.SensorData;
 import com.honeywell.ims.api.device.WateringCommand;
-import com.honeywell.ims.api.web.DeviceStatus;
+import com.honeywell.ims.api.web.DeviceData;
+import com.honeywell.ims.api.web.Settings;
 import com.honeywell.ims.dao.DeviceDao;
 import com.honeywell.ims.dao.SettingsDao;
-import com.honeywell.ims.domain.UserSettings;
 import com.honeywell.ims.enums.Command;
 import com.honeywell.ims.enums.WateringStatus;
 
@@ -33,25 +35,29 @@ public class DeviceService {
 	@Autowired
 	private SettingsDao settingsDao;
 
-	public DeviceStatus getStatus(String deviceId){
-		SensorData sensorData = getCachedDeviceData(null);
-		return sensorData.convertToDeviceStatus();
+	public DeviceData getStatus(String deviceId){
+		DeviceData deviceData = getDeviceData(deviceId);
+		return deviceData;
 	}
 
-	public SensorData getFreshDeviceData(String id){
-		logger.info("Requesting fresh device data {}", id);
+	public DeviceData fetchDevice(String id){
 		RestTemplate restTemplate = new RestTemplate();
-		SensorData deviceData = restTemplate.getForObject(Constants.CLOUDANT_SENSOR_DATA_URL, SensorData.class);
+		SensorData sensorData = restTemplate.getForObject(Constants.CLOUDANT_SENSOR_DATA_URL, SensorData.class);
+
+		DeviceData deviceData = sensorData.convertToDeviceData();
+		deviceDao.saveDeviceData(deviceData);
+
+		logger.info("Requesting fresh device data {}", deviceData);
 
 		return deviceData;
 	}
 
-	public SensorData getCachedDeviceData(String id){
+	public DeviceData getDeviceData(String id){
 		logger.info("Requesting cached device data ({})", id);
-		SensorData deviceData = deviceDao.getDeviceData(id);
+		DeviceData deviceData = deviceDao.getDeviceData(id);
 		if(deviceData == null){
-			logger.info("Device not cached yet. Going for fresh one...", id);
-			deviceData = getFreshDeviceData(id);
+			deviceData = fetchDevice(id);
+			logger.info("Device not cached yet. Going for fresh one... {}", deviceData);
 		}
 		return deviceData;
 	}
@@ -69,17 +75,62 @@ public class DeviceService {
 		switch (command) {
 			case on:
 				logger.info("Executing ON command");
-				//get the settings
-				UserSettings settings = settingsDao.getUserSettings(null);
-				return wateringService.startWatering(new WateringCommand(settings.getWateringDuration()));
+				return startWatering();
 			case off:
 				logger.info("Executing OFF command");
 
-				return wateringService.stopWatering(new WateringCommand());
+				return stopWatering();
 			default:
 				break;
 		}
 		return false;
+	}
+
+
+	/**
+	 * Request DEVICE to START watering
+	 *
+	 * @return true if was accepted, false otherwise
+	 */
+	private boolean startWatering() {
+		//get the settings
+		Settings settings = settingsDao.getUserSettings(null);
+		DeviceData deviceData = deviceDao.getDeviceData(null);
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity responseEntity = restTemplate.postForEntity(Constants.WATERING_START_URL, WateringCommand.create(settings.getWateringDuration()), null);
+
+		logger.info("Request start watering {} for data {} with result {}", new Object[]{Constants.WATERING_START_URL, settings.getWateringDuration(), responseEntity.getStatusCode()});
+		boolean isSuccess = HttpStatus.OK == responseEntity.getStatusCode();
+		if (isSuccess) {
+			//update the status
+			deviceData.setStatus(WateringStatus.RUNNING);
+			deviceDao.saveDeviceData(deviceData);
+		}
+		return isSuccess;
+	}
+
+	/**
+	 * Request DEVICE to STOP watering
+	 *
+	 * @return true if was accepted, false otherwise
+	 */
+	private boolean stopWatering() {
+		//get the settings
+		Settings settings = settingsDao.getUserSettings(null);
+		DeviceData deviceData = deviceDao.getDeviceData(null);
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity responseEntity = restTemplate.postForEntity(Constants.WATERING_STOP_URL, null, null);
+
+		logger.info("Request stop watering {} for data {} with result {}", new Object[]{Constants.WATERING_STOP_URL, responseEntity.getStatusCode()});
+		boolean isSuccess = HttpStatus.OK == responseEntity.getStatusCode();
+		if (isSuccess) {
+			//update the status
+			deviceData.setStatus(WateringStatus.STOPPED);
+			deviceDao.saveDeviceData(deviceData);
+		}
+		return isSuccess;
 	}
 
 
