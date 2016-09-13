@@ -495,67 +495,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<!-- area-chart -->
 					<div class="area-grids">
 						<div class="area-grids-heading">
-							<h3>Rain probability by area</h3>
+							<h3>Weather forecast percentage</h3>
 						</div>
 						<div id="graph4"></div>
 						<script>
-							Morris.Donut({
-							  element: 'graph4',
-							  data: [
-								{value: 70, label: 'no rain, cloudy', formatted: '70%' },
-								{value: 15, label: 'light rain', formatted: '15%' },
-								{value: 10, label: 'sunny', formatted: '10%' },
-								{value: 5, label: 'heavy rain', formatted: '5%' }
-							  ],
-							  formatter: function (x, data) { return data.formatted; }
+							$.ajax({
+								url: "/forecast/weather"
+							}).success(function(weatherData) {
+								var arr = [];
+								for(var i =0; i < weatherData.length; i++){
+									arr.push({value: weatherData[i].percentage, label: weatherData[i].description, formatted: weatherData[i].percentage+"%"});
+								}
+
+								Morris.Donut({
+									element: 'graph4',
+									data: arr,
+									formatter: function (x, data) { return data.formatted; }
+								});
 							});
 						</script>
 
 					</div>
 					<!-- //area-chart -->
 				</div>
-				<div class="col-md-8 chart-left">
-					<!-- updating-data -->
-					<div class="agile-Updating-grids">
+				<div class="col-md-8 agile-left">
+					<div class="agile-bottom-grid">
 						<div class="area-grids-heading">
-							<h3>Percipitation [mm] (blue), sunshine [hours/ day] (yellow)</h3>
+							<h3>Average Percipitation [mm] by month</h3>
 						</div>
-						<div id="graph1"></div>
+						<div id="graph9"></div>
 						<script>
-						var nReloads = 0;
-						function data(offset) {
-						  var ret = [];
-						  for (var x = 0; x <= 360; x += 10) {
-							var v = (offset + x) % 360;
-							ret.push({
-							  x: x,
-							  y: Math.sin(Math.PI * v / 180).toFixed(4),
-							  z: Math.cos(Math.PI * v / 180).toFixed(4)
+							var day_data = [
+								{"elapsed": "I", "value": 34},
+								{"elapsed": "II", "value": 24},
+								{"elapsed": "III", "value": 3},
+								{"elapsed": "IV", "value": 12},
+								{"elapsed": "V", "value": 13},
+								{"elapsed": "VI", "value": 22},
+								{"elapsed": "VII", "value": 5},
+								{"elapsed": "VIII", "value": 26},
+								{"elapsed": "IX", "value": 12},
+								{"elapsed": "X", "value": 19}
+							];
+							Morris.Line({
+								element: 'graph9',
+								data: day_data,
+								xkey: 'elapsed',
+								ykeys: ['value'],
+								labels: ['value'],
+								parseTime: false
 							});
-						  }
-						  return ret;
-						}
-						var graph = Morris.Line({
-							element: 'graph1',
-							data: data(0),
-							xkey: 'x',
-							ykeys: ['y', 'z'],
-							labels: ['sin()', 'cos()'],
-							parseTime: false,
-							ymin: -1.0,
-							ymax: 1.0,
-							hideHover: true
-						});
-						function update() {
-						  nReloads++;
-						  graph.setData(data(5 * nReloads));
-						  $('#reloadStatus').text(nReloads + ' reloads');
-						}
-						setInterval(update, 1000);
 						</script>
 
 					</div>
-					<!-- //updating-data -->
 				</div>
 				<div class="clearfix"> </div>
 			</div>
@@ -680,37 +672,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</script>
 					</div>
 				</div>
-				<div class="col-md-4 agile-last-left agile-last-right">
-					<div class="agile-last-grid">
-						<div class="area-grids-heading">
-							<h3>Average Percipitation [mm] by month</h3>
-						</div>
-						<div id="graph9"></div>
-						<script>
-						var day_data = [
-						  {"elapsed": "I", "value": 34},
-						  {"elapsed": "II", "value": 24},
-						  {"elapsed": "III", "value": 3},
-						  {"elapsed": "IV", "value": 12},
-						  {"elapsed": "V", "value": 13},
-						  {"elapsed": "VI", "value": 22},
-						  {"elapsed": "VII", "value": 5},
-						  {"elapsed": "VIII", "value": 26},
-						  {"elapsed": "IX", "value": 12},
-						  {"elapsed": "X", "value": 19}
-						];
-						Morris.Line({
-						  element: 'graph9',
-						  data: day_data,
-						  xkey: 'elapsed',
-						  ykeys: ['value'],
-						  labels: ['value'],
-						  parseTime: false
-						});
-						</script>
 
-					</div>
-				</div>
 				<div class="clearfix"> </div>
 			</div>
             

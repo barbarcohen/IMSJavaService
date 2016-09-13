@@ -1,5 +1,6 @@
 package com.honeywell.ims.service;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,14 @@ public class SettingsService {
 		logger.info("Retrieving user settings {}", userSettings);
 
 		return userSettings;
+	}
+
+	public Settings resetWateringTime(final String id){
+		Settings settings = getSettings(id);
+		DateTime newDate = new DateTime(settings.getNextWatering()).plusHours(settings.getDelay());
+		settings.setNextWatering(newDate.toDate());
+		saveSettings(settings);
+		return settings;
 	}
 
 }

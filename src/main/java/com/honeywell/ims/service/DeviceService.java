@@ -30,10 +30,7 @@ public class DeviceService {
 	private DeviceDao deviceDao;
 
 	@Autowired
-	private WateringService wateringService;
-
-	@Autowired
-	private SettingsDao settingsDao;
+	private SettingsService settingsService;
 
 	public DeviceData getStatus(String deviceId){
 		DeviceData deviceData = getDeviceData(deviceId);
@@ -94,7 +91,7 @@ public class DeviceService {
 	 */
 	private boolean startWatering() {
 		//get the settings
-		Settings settings = settingsDao.getUserSettings(null);
+		Settings settings = settingsService.getSettings(null);
 		DeviceData deviceData = deviceDao.getDeviceData(null);
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -105,6 +102,7 @@ public class DeviceService {
 		if (isSuccess) {
 			//update the status
 			deviceData.setStatus(WateringStatus.RUNNING);
+			settingsService.resetWateringTime(null);
 			deviceDao.saveDeviceData(deviceData);
 		}
 		return isSuccess;
@@ -117,7 +115,7 @@ public class DeviceService {
 	 */
 	private boolean stopWatering() {
 		//get the settings
-		Settings settings = settingsDao.getUserSettings(null);
+		Settings settings = settingsService.getSettings(null);
 		DeviceData deviceData = deviceDao.getDeviceData(null);
 
 		RestTemplate restTemplate = new RestTemplate();

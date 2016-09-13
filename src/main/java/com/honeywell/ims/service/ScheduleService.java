@@ -23,9 +23,6 @@ import com.honeywell.ims.enums.WateringStatus;
 public class ScheduleService {
 
 	@Autowired
-	private WateringService wateringService;
-
-	@Autowired
 	private ForecastService forecastService;
 
 	@Autowired
@@ -41,19 +38,19 @@ public class ScheduleService {
 
 	@Scheduled(fixedRate = Constants.FORECAST_CHECK_RATE)
 	public void refreshForecast() {
-		logger.info("Fetching fresh forecast {}", UtilService.getCurrentDate());
+		logger.info("Fetching fresh forecast {}", Utils.getCurrentDate());
 		forecastService.fetchForecast();
 	}
 
 	@Scheduled(fixedRate = Constants.DEVICE_CHECK_RATE)
 	public void refreshDevice() {
-		logger.info("Fetching fresh device {}", UtilService.getCurrentDate());
+		logger.info("Fetching fresh device {}", Utils.getCurrentDate());
 		deviceService.fetchDevice(null);
 	}
 
 	@Scheduled(fixedRate = Constants.WATERING_CHECK_RATE)
 	public void checkForWatering() {
-		Date currentDate = UtilService.getCurrentDate();
+		Date currentDate = Utils.getCurrentDate();
 		logger.info("Running check for watering, {}", currentDate);
 
 		Settings userSettings = settingsDao.getUserSettings(null);

@@ -35,9 +35,9 @@ function wateringControl() {
         type: "PUT",
         dataType: "json",
         url: controlURL,
-        success: function() {
-            $('#watering_control_button').text(watering ? "Stop Watering" : "Start Watering");
-            alert("Switched the watering " + (watering ? "on" : "off"));
+        success: function(result) {
+            $('#watering_control_button').text(wateringStatus ? "Stop Watering" : "Start Watering");
+            alert("Switched the watering " + (wateringStatus ? "on" : "off"));
             wateringStatus = !wateringStatus;
         }
     });
@@ -49,15 +49,16 @@ function getDummyJson() {
 
 function updateNextWatering() {
     var json = getWateringJson(function(obj){
-        var date = new Date(parseInt(obj.nextWateringDate));
-        if(obj.status === "running"){
+        var date = new Date(parseInt(obj.settings.nextWatering));
+        //FIXME fetch wattering status periodically in different call
+        if(obj.deviceData.status === "RUNNING"){
             wateringStatus = true;
         } else {
             wateringStatus = false;
         }
 
         startCountDown(date);
-        $("#watering_status").text("Watering: " + obj.status);
+        $("#watering_status").text("Watering: " + obj.deviceData.status);
     });
     
 

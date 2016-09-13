@@ -1,11 +1,8 @@
 package com.honeywell.ims.api.web;
 
 import java.util.Date;
-import java.util.Set;
 
-import org.joda.time.DateTime;
-
-import com.honeywell.ims.service.UtilService;
+import com.honeywell.ims.service.Utils;
 
 /**
  * Created by h134602 on 9/13/2016.
@@ -18,7 +15,7 @@ public class Settings {
 	private Date nextWatering;
 
 	//seconds
-	private int repeatEvery;
+	private int delay;
 
 	//seconds
 	private long wateringDuration;
@@ -27,14 +24,26 @@ public class Settings {
 
 	private boolean forceIrrigation;
 
-	public static Settings createDefault(){
+	private int forecastHours;
+
+	public static Settings createDefault() {
 		Settings settings = new Settings();
-		settings.setNextWatering(UtilService.getCurrentDateTime().plusHours(1).toDate());
-		settings.setRepeatEvery(1);
+		settings.setNextWatering(Utils.getCurrentDateTime().plusHours(1).toDate());
+		settings.setDelay(1);
 		settings.setWateringDuration(5);
 		settings.setMinHumidityThreshold(10);
+		settings.setForecastHours(24);
 		return settings;
 	}
+
+	public int getForecastHours() {
+		return forecastHours;
+	}
+
+	public void setForecastHours(final int forecastHours) {
+		this.forecastHours = forecastHours;
+	}
+
 	public String getDeviceId() {
 		return deviceId;
 	}
@@ -75,12 +84,12 @@ public class Settings {
 		this.forceIrrigation = forceIrrigation;
 	}
 
-	public int getRepeatEvery() {
-		return repeatEvery;
+	public int getDelay() {
+		return delay;
 	}
 
-	public void setRepeatEvery(final int repeatEvery) {
-		this.repeatEvery = repeatEvery;
+	public void setDelay(final int delay) {
+		this.delay = delay;
 	}
 
 	@Override
@@ -88,10 +97,11 @@ public class Settings {
 		return "Settings{" +
 			"deviceId='" + deviceId + '\'' +
 			", nextWatering=" + nextWatering +
-			", repeatEvery=" + repeatEvery +
+			", delay=" + delay +
 			", wateringDuration=" + wateringDuration +
 			", minHumidityThreshold=" + minHumidityThreshold +
 			", forceIrrigation=" + forceIrrigation +
+			", forecastHours=" + forecastHours +
 			'}';
 	}
 }

@@ -13,19 +13,18 @@ public class Forecast {
 
 	private City city;
 
-	private String country;
-
-	private String message;
+	@JsonProperty(value = "cnt")
+	private int count;
 
 	@JsonProperty(value = "list")
-	private List<Data> dataMap;
+	private List<Data> dataList;
 
-	public List<Data> getDataMap() {
-		return dataMap;
+	public List<Data> getDataList() {
+		return dataList;
 	}
 
-	public void setDataMap(final List<Data> dataMap) {
-		this.dataMap = dataMap;
+	public void setDataList(final List<Data> dataList) {
+		this.dataList = dataList;
 	}
 
 	public City getCity() {
@@ -36,19 +35,11 @@ public class Forecast {
 		this.city = city;
 	}
 
-	public String getCountry() {
-		return country;
+	public int getCount() {
+		return count;
 	}
 
-	public void setCountry(final String country) {
-		this.country = country;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(final String message) {
-		this.message = message;
+	public void setCount(final int count) {
+		this.count = count;
 	}
 }
