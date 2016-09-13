@@ -1,4 +1,4 @@
-package com.honeywell.ims.domain;
+package com.honeywell.ims.enums;
 
 /**
  * Created by h134602 on 9/13/2016.

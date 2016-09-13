@@ -7,11 +7,13 @@ import java.util.Date;
  */
 public class UserSettings {
 
-	private String id;
+	private String deviceId;
 
 	private Date nextWatering;
 
 	private long wateringDuration;
+
+	private int minHumidityThreshold;
 
 	public static UserSettings createDefault() {
 		return new UserSettings(null, null, 0);
@@ -20,9 +22,9 @@ public class UserSettings {
 	public UserSettings() {
 	}
 
-	public UserSettings(final String id, final Date nextWatering, final long wateringDuration) {
+	public UserSettings(final String deviceId, final Date nextWatering, final long wateringDuration) {
 		this.nextWatering = nextWatering;
-		this.id = id;
+		this.deviceId = deviceId;
 		this.wateringDuration = wateringDuration;
 	}
 
@@ -42,20 +44,29 @@ public class UserSettings {
 		this.wateringDuration = wateringDuration;
 	}
 
-	public String getId() {
-		return id;
+	public String getDeviceId() {
+		return deviceId;
 	}
 
-	public void setId(final String id) {
-		this.id = id;
+	public void setDeviceId(final String deviceId) {
+		this.deviceId = deviceId;
+	}
+
+	public int getMinHumidityThreshold() {
+		return minHumidityThreshold;
+	}
+
+	public void setMinHumidityThreshold(final int minHumidityThreshold) {
+		this.minHumidityThreshold = minHumidityThreshold;
 	}
 
 	@Override
 	public String toString() {
 		return "UserSettings{" +
-			"id='" + id + '\'' +
+			"deviceId='" + deviceId + '\'' +
 			", nextWatering=" + nextWatering +
 			", wateringDuration=" + wateringDuration +
+			", minHumidityThreshold=" + minHumidityThreshold +
 			'}';
 	}
 }

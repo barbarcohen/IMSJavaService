@@ -13,7 +13,17 @@ public class Settings {
 
 	private long wateringDuration;//in seconds
 
+	private int minHumidityTreshold;
+
 	private boolean dummyWeatherMode;
+
+	public int getMinHumidityTreshold() {
+		return minHumidityTreshold;
+	}
+
+	public void setMinHumidityTreshold(final int minHumidityTreshold) {
+		this.minHumidityTreshold = minHumidityTreshold;
+	}
 
 	public Date getNextWatering() {
 		return nextWatering;
