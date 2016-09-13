@@ -5,6 +5,7 @@ License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE html>
+<html>
 <head>
 <title>Colored  an Admin Panel Category Flat Bootstrap Responsive Website Template | Home :: w3layouts</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -388,9 +389,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         
 		<div class="main-grid">
 			
-            				<div class="col-md-6 count">
+            <div class="col-md-6 count">
 						<div class="count-grid">
-							<h3 class="title">Next Watering</h3>
+                            <table width="100%">
+                                <tr>
+                                    <td width="50%">
+                                        <h3 class="title" >Next Watering</h3>
+                                    </td>
+                                    <td width="50%">
+                                        <button align="right">Start Watering</button>
+                                    </td>
+
+                                </tr>
+                            </table>
 							<ul id="example">
 								<li><span class="hours">00</span><p class="hours_text">Hours</p></li>
 								<li class="seperator">:</li>
@@ -400,29 +411,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</ul>
 							<div class="clearfix"> </div>
 							<script type="text/javascript" src="js/jquery.countdown.min.js"></script>
-							<script type="text/javascript">
-								$('#example').countdown({
-									date: '09/12/2016 18:00:00',
-									offset: -8,
-									day: 'Day',
-									days: 'Days'
-								}, function () {
-									alert('Done!');
-								});
-							</script>
-						</div>
+						</div>    
 				</div>
 				<div class="col-md-6 weather">
 					<div class="weather-right">
 						<div class="weather-heading">
 							<h3>Weather Report</h3>
 						</div>
-								<ul>
-									<li>
+<ul id = "weather_ul">
+                    <li>
 										<figure class="icons">
 											<canvas id="partly-cloudy-day" width="60" height="60"></canvas>
 										</figure>
-										<h3>25 °C</h3>
+										<h3 id="0_day_temp">25 °C</h3>
 										<div class="clearfix"></div>
 									</li>
 									<li>
@@ -431,17 +432,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</figure>
 										<div class="weather-text">
 											<h4>WED</h4>
-											<h5>27 °C</h5>
+											<h5 id="1_day_temp">27 °C</h5>
 										</div>
 										<div class="clearfix"></div>
 									</li>
-									<li>
-										<figure class="icons">
+									<li id="some_li">
+										<!--<figure class="icons">
 											<canvas id="snow" width="40" height="40"></canvas>
-										</figure>
+										</figure>-->
 										<div class="weather-text">
 											<h4>THR</h4>
-											<h5>13 °C</h5>
+											<h5 id="2_day_temp">13 °C</h5>
 										</div>
 										<div class="clearfix"></div>
 									</li>
@@ -451,7 +452,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</figure>
 										<div class="weather-text">
 											<h4>FRI</h4>
-											<h5>18 °C</h5>
+											<h5 id="3_day_temp">18 °C</h5>
 										</div>
 										<div class="clearfix"></div>
 									</li>
@@ -461,7 +462,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</figure>
 										<div class="weather-text">
 											<h4>SAT</h4>
-											<h5>15 °C</h5>
+											<h5 id="4_day_temp">15 °C</h5>
 										</div>
 										<div class="clearfix"></div>
 									</li>
@@ -471,33 +472,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</figure>
 										<div class="weather-text">
 											<h4>SUN</h4>
-											<h5>11 °C</h5>
+											<h5 id="5_day_temp">11 °C</h5>
 										</div>
 										<div class="clearfix"></div>
 									</li>
-								</ul>
-								<script>
-									 var icons = new Skycons({"color": "#fcb216"}),
-										  list  = [
-											"partly-cloudy-day"
-										  ],
-										  i;
-
-									  for(i = list.length; i--; )
-										icons.set(list[i], list[i]);
-									  icons.play();
-								</script>
-								<script>
-									 var icons = new Skycons({"color": "#000"}),
-										  list  = [
-											"clear-night","partly-cloudy-night", "cloudy", "clear-day", "sleet", "snow", "wind","fog"
-										  ],
-										  i;
-
-									  for(i = list.length; i--; )
-										icons.set(list[i], list[i]);
-									  icons.play();
-								</script>
+                </ul>
 					</div>
                 </div>
                 
@@ -799,12 +778,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<!-- footer -->
 		<div class="footer">
-			<p>© 2016 Colored . All Rights Reserved.</a></p>
+			<p>© 2016 Colored . All Rights Reserved.</p>
 		</div>
 		<!-- //footer -->
 	</section>
-	<script src="js/bootstrap.js"></script>
-    
-    <script src="js/fetchWeather.js"></script>
+
+<!-- Scripts -->
+<script src="js/bootstrap.js"></script>
+<script src="js/fetchNextWatering.js"></script>
+<script src="js/fetchWeatherForecast.js"></script>
+
 </body>
 </html>
