@@ -1,3 +1,5 @@
+var wateringStatus = false;
+
 function startCountDown(watering_date) {
     $('#example').countdown({
         date: watering_date,
@@ -20,10 +22,10 @@ function getWateringJson() {
     });
 }
 
-function wateringControl(watering) {
+function wateringControl() {
     controlURL = "";
 
-    if (watering) {
+    if (wateringStatus) {
         controlURL = "/control/on";
     } else {
         controlURL = "/control/off";
@@ -34,23 +36,31 @@ function wateringControl(watering) {
         dataType: "json",
         url: controlURL,
         success: function() {
+            $('#watering_control_button').text(watering ? "Stop Watering" : "Start Watering");
             alert("Switched the watering " + (watering ? "on" : "off"));
+            wateringStatus = !wateringStatus;
         }
     });
-    
-    alert("blbl");
 }
 
 function getDummyJson() {
-    return '{"nextWateringDate":1473855868000,"status":"stopped"}';
+    return '{"nextWateringDate":1473855868000,"status":"on"}';
 }
 
 function updateNextWatering() {
-    var json = getDummyJson();
+    var json = getWateringJson();
+    
     obj = JSON.parse(json);
+    
     var date = new Date(parseInt(obj.nextWateringDate));
+    if(obj.status === "running"){
+        wateringStatus = true;
+    } else {
+        wateringStatus = false;
+    }
+
     startCountDown(date);
-    $("#watering_table tr:last td:first").before("<td><h3>Watering: " + obj.status + "</h3></td>");
+    $("#watering_status").text("Watering: " + obj.status);
 };
 
 
