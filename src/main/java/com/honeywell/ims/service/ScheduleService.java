@@ -56,7 +56,7 @@ public class ScheduleService {
 		Settings userSettings = settingsDao.getUserSettings(null);
 
 		//run only when date is immediate
-		if (isTheRightTime(userSettings.getNextWatering(), currentDate)) {
+		if (isTheRightTime(userSettings.getNextWateringDate(), currentDate)) {
 			handleWatering(userSettings);
 		}
 	}

@@ -1,30 +1,37 @@
 
-function startCountDown(watering_date) {
+function startCountDown() {
+     var watering_date =  new Date(parseInt(wateringData.settings.nextWateringDate));
+    console.log(watering_date);
     $('#example').countdown({
         date: watering_date,
         offset: -8,
         day: 'Day',
         days: 'Days'
     }, function() {
-        alert('Done!');
+
     });
 }
 function refreshWateringStatus(){
     if(wateringData.deviceData !== undefined){
         $("#watering_status").text(wateringData.deviceData.status);
-        console.log("refeshing status");
-
+        var text = isRunning() ? "Stop Watering" : "Start Watering";
+        $('#watering_control_button').text(text);
+        console.log("changing to "+text);
+        startCountDown()
     }
     setTimeout(refreshWateringStatus, 1000);
+}
+function isRunning(){
+    wateringData.deviceData.status === "RUNNING";
 }
 
 function wateringControl() {
     controlURL = "";
 
-    if (wateringStatus) {
-        controlURL = "/control/on";
-    } else {
+    if (isRunning()) {
         controlURL = "/control/off";
+    } else {
+        controlURL = "/control/on";
     }
 
     $.ajax({
@@ -32,33 +39,14 @@ function wateringControl() {
         dataType: "json",
         url: controlURL,
         success: function(result) {
-            $('#watering_control_button').text(wateringStatus ? "Stop Watering" : "Start Watering");
-            alert("Switched the watering " + (wateringStatus ? "on" : "off"));
-            wateringStatus = !wateringStatus;
+            if(result.successful == true){
+
+            }
         }
     });
 }
 
-function updateNextWatering() {
-    var json = getWateringJson(function(obj){
-        var date = new Date(parseInt(obj.settings.nextWatering));
-        //FIXME fetch wattering status periodically in different call
-        if(obj.deviceData.status === "RUNNING"){
-            wateringStatus = true;
-        } else {
-            wateringStatus = false;
-        }
-
-        startCountDown(date);
-        $("#watering_status").text("Watering: " + obj.deviceData.status);
-    });
-    
-
-};
-
-
 $(document).ready(function(){
-
     refreshWateringData();
     refreshWateringStatus();
 });

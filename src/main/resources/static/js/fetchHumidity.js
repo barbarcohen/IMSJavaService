@@ -30,7 +30,7 @@ function data(offset) {
 
 function getTimeString(x){
     var d = new Date();
-    console.log(d);
+    //console.log(d);
     var timeString = d.getHours() + ":";
     var minutes = d.getMinutes() + Math.floor((d.getSeconds() + x/10)/60);
     timeString += (minutes>10)? minutes + ":" : "0" + minutes + ":";

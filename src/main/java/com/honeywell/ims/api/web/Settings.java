@@ -12,8 +12,8 @@ public class Settings {
 	private String deviceId;
 
 	//date
-	private Date nextWatering;
-
+	private Date nextWateringDate;
+	private int nextWaterigSeconds;
 	//seconds
 	private int delay;
 
@@ -28,7 +28,7 @@ public class Settings {
 
 	public static Settings createDefault() {
 		Settings settings = new Settings();
-		settings.setNextWatering(Utils.getCurrentDateTime().plusHours(1).toDate());
+		settings.setNextWateringDate(Utils.getCurrentDateTime().plusHours(1).toDate());
 		settings.setDelay(1);
 		settings.setWateringDuration(5);
 		settings.setMinHumidityThreshold(10);
@@ -52,12 +52,20 @@ public class Settings {
 		this.deviceId = deviceId;
 	}
 
-	public Date getNextWatering() {
-		return nextWatering;
+	public Date getNextWateringDate() {
+		return nextWateringDate;
 	}
 
-	public void setNextWatering(final Date nextWatering) {
-		this.nextWatering = nextWatering;
+	public void setNextWateringDate(final Date nextWateringDate) {
+		this.nextWateringDate = nextWateringDate;
+	}
+
+	public int getNextWaterigSeconds() {
+		return nextWaterigSeconds;
+	}
+
+	public void setNextWaterigSeconds(final int nextWaterigSeconds) {
+		this.nextWaterigSeconds = nextWaterigSeconds;
 	}
 
 	public long getWateringDuration() {
@@ -96,7 +104,7 @@ public class Settings {
 	public String toString() {
 		return "Settings{" +
 			"deviceId='" + deviceId + '\'' +
-			", nextWatering=" + nextWatering +
+			", nextWatering=" + nextWateringDate +
 			", delay=" + delay +
 			", wateringDuration=" + wateringDuration +
 			", minHumidityThreshold=" + minHumidityThreshold +
