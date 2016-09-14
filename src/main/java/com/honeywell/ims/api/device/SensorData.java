@@ -42,7 +42,7 @@ public class SensorData {
 			sensorData = new SensorDataDoc();
 		}
 		DeviceData status = new DeviceData();
-		status.setStatus("1".equals(sensorData) ? WateringStatus.RUNNING : WateringStatus.STOPPED);
+		status.setStatus("1".equals(sensorData.getIsRunning()) ? WateringStatus.RUNNING : WateringStatus.STOPPED);
 		status.setHumidity(convertHumidity(sensorData.getHumidityOriginal()));
 		return status;
 	}

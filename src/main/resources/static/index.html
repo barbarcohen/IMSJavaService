@@ -398,10 +398,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                         <button align="right" onclick="wateringControl()" id="watering_control_button">Start Watering</button>
                                     </td>
                                     <td width="33%">
-                                        <h3 class="title" id="watering_status">Watering: Off</h3>
+                                        <h3 class="title">Watering status: <span id="watering_status">STOPPED</span></h3>
                                     </td>
                                     <td width="33%">
-                                        <h3 class="title" >Next Watering:</h3>
+                                        <h3 class="title" >Next Watering in:</h3>
                                     </td>
                                 </tr>
                             </table>
@@ -499,7 +499,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div id="graph4"></div>
 						<script>
-
+							function refreshWeatherData() {
 								$.ajax({
 									url: "/forecast/weather"
 								}).success(function(weatherData) {
@@ -515,8 +515,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										data: arr,
 										formatter: function(x, data) { return data.formatted; }
 									});
+									setTimeout(refreshWeatherData, 5000);
 								});
-
+							}
+							refreshWeatherData();
 						</script>
 
 					</div>
@@ -748,6 +750,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			setTimeout(refreshWateringData, 1000);
 		});
 	}
+	refreshWateringData();
 </script>
 </body>
 </html>

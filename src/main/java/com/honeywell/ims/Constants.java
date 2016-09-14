@@ -14,11 +14,11 @@ public interface Constants {
 	String CLOUDANT_SENSOR_DATA_URL = "https://dec32ea6-0338-43b8-98ba-9fc053d538b1-bluemix.cloudant.com/sensordata/_all_docs?include_docs=true&limit=1&descending=true";
 
 
-	int DEVICE_CHECK_RATE = 1 * 1 * 1000;//10sec
+	int DEVICE_CHECK_RATE = 1 * 1 * 1000;//1sec
 
 	int WATERING_CHECK_RATE = 1 * 60 * 1000;//1 minutes
 
-	int WATERING_TIME_THRESHOLD = 1 * 60 * 1000;//1 minute
+	int WATERING_TIME_THRESHOLD = 0 * 60 * 1000;//1 minute
 
 	int FORECAST_CHECK_RATE = 15 * 60 * 1000;//15 minutes
 }

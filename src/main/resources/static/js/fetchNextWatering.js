@@ -9,16 +9,13 @@ function startCountDown(watering_date) {
         alert('Done!');
     });
 }
+function refreshWateringStatus(){
+    if(wateringData.deviceData !== undefined){
+        $("#watering_status").text(wateringData.deviceData.status);
+        console.log("refeshing status");
 
-function getWateringJson(callback) {
-    $.ajax({
-        type: "GET",
-        dataType: "json",
-        url: "/control/status",
-        success: function(data) {
-            callback(data)
-        }
-    });
+    }
+    setTimeout(refreshWateringStatus, 1000);
 }
 
 function wateringControl() {
@@ -61,6 +58,7 @@ function updateNextWatering() {
 
 
 $(document).ready(function(){
-    //updateNextWatering();
+
     refreshWateringData();
+    refreshWateringStatus();
 });
