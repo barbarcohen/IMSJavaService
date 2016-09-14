@@ -55,6 +55,7 @@ public class ForecastService {
 	 */
 	public RainProbability getRainProbability(Settings settings) {
 		Forecast forecast = getLatestForecast();
+
 		//TODO get from foreccaast data
 		return new RainProbability(50, 10);
 	}

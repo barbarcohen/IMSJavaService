@@ -28,14 +28,14 @@ function data(offset) {
 }
 
 function update() {
-    humidityValues[nReloads + 35] = getCurrentDummyHumidity();
+    humidityValues[nReloads + 36] = getCurrentDummyHumidity();
     nReloads++;
     graph.setData(data(5 * nReloads));
     $('#reloadStatus').text(nReloads + ' reloads');
 }
 
 function getCurrentDummyHumidity(){
-    return Math.floor(Math.random() * 100);
+    return wateringData.deviceData.humidity;
 }
 
 function initHumidityValues(){
@@ -46,7 +46,7 @@ function initHumidityValues(){
 
 function runThis(){
     initHumidityValues();
-    setInterval(update, 400);
+    setInterval(update, 1000);
 }
 
 $(document).ready(runThis());

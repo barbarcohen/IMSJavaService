@@ -42,18 +42,17 @@ public class SensorData {
 			sensorData = new SensorDataDoc();
 		}
 		DeviceData status = new DeviceData();
-		status.setStatus(sensorData.isRunning() ? WateringStatus.RUNNING : WateringStatus.STOPPED);
+		status.setStatus("1".equals(sensorData) ? WateringStatus.RUNNING : WateringStatus.STOPPED);
 		status.setHumidity(convertHumidity(sensorData.getHumidityOriginal()));
 		return status;
 	}
-	//FIXME this is original  Humidity:100%; Relay:0%;, \r\n\n
-	private double convertHumidity(String humidityOriginal){
-		if(humidityOriginal != null){
-			int start = humidityOriginal.indexOf("Humidity:");
-			int end = humidityOriginal.indexOf("%");
+
+
+	private double convertHumidity(String humidityOriginal) {
+		if (humidityOriginal != null) {
 			try {
-				return Double.valueOf(humidityOriginal.substring(start+"Humidity:".length(), end)).doubleValue();
-			}catch (NumberFormatException e){
+				return Double.valueOf(humidityOriginal).doubleValue();
+			} catch (NumberFormatException e) {
 			}
 		}
 		return 0;

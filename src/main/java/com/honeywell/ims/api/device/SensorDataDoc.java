@@ -11,7 +11,7 @@ public class SensorDataDoc {
 	private String humidityOriginal;
 
 	@JsonProperty(value = "IsRunning")
-	private boolean isRunning;
+	private String isRunning;
 
 	public String getHumidityOriginal() {
 		return humidityOriginal;
@@ -21,11 +21,11 @@ public class SensorDataDoc {
 		this.humidityOriginal = humidityOriginal;
 	}
 
-	public boolean isRunning() {
+	public String getIsRunning() {
 		return isRunning;
 	}
 
-	public void setIsRunning(final boolean isRunning) {
+	public void setIsRunning(final String isRunning) {
 		this.isRunning = isRunning;
 	}
 

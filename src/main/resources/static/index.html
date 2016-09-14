@@ -499,20 +499,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div id="graph4"></div>
 						<script>
-							$.ajax({
-								url: "/forecast/weather"
-							}).success(function(weatherData) {
-								var arr = [];
-								for(var i =0; i < weatherData.length; i++){
-									arr.push({value: weatherData[i].percentage, label: weatherData[i].description, formatted: weatherData[i].percentage+"%"});
-								}
 
-								Morris.Donut({
-									element: 'graph4',
-									data: arr,
-									formatter: function (x, data) { return data.formatted; }
+								$.ajax({
+									url: "/forecast/weather"
+								}).success(function(weatherData) {
+									var arr = [];
+									for (var i = 0; i < weatherData.length; i++) {
+										arr.push({
+											value: weatherData[i].percentage, label: weatherData[i].description, formatted: weatherData[i].percentage + "%"
+										});
+									}
+
+									Morris.Donut({
+										element: 'graph4',
+										data: arr,
+										formatter: function(x, data) { return data.formatted; }
+									});
 								});
-							});
+
 						</script>
 
 					</div>
@@ -730,6 +734,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/fetchNextWatering.js"></script>
 <script src="js/fetchWeatherForecast.js"></script>
 <script src="js/fetchHumidity.js"></script>
+<script>
+	var wateringData = {};
 
+	//refreshing watering data every 2 seconds
+	function refreshWateringData(){
+		$.ajax({
+			dataType: "json",
+			url: "/control/status"
+		}).success(function(data) {
+			wateringData = data;
+			//updateNextWatering();
+			setTimeout(refreshWateringData, 1000);
+		});
+	}
+</script>
 </body>
 </html>

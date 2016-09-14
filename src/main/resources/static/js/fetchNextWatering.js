@@ -1,16 +1,3 @@
-var wateringData = {};
-
-//refreshing watering data every 2 seconds
-function refreshWateringData(){
-    $.ajax({
-        dataType: "json",
-        url: "/control/status"
-    }).success(function(data) {
-        wateringData = data;
-        //updateNextWatering();
-        setTimeout(refreshWateringData, 1000);
-    });
-}
 
 function startCountDown(watering_date) {
     $('#example').countdown({
