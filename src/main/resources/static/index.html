@@ -524,29 +524,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<h3>Average Percipitation [mm] by month</h3>
 						</div>
 						<div id="graph9"></div>
-						<script>
-							var day_data = [
-								{"elapsed": "I", "value": 34},
-								{"elapsed": "II", "value": 24},
-								{"elapsed": "III", "value": 3},
-								{"elapsed": "IV", "value": 12},
-								{"elapsed": "V", "value": 13},
-								{"elapsed": "VI", "value": 22},
-								{"elapsed": "VII", "value": 5},
-								{"elapsed": "VIII", "value": 26},
-								{"elapsed": "IX", "value": 12},
-								{"elapsed": "X", "value": 19}
-							];
-							Morris.Line({
-								element: 'graph9',
-								data: day_data,
-								xkey: 'elapsed',
-								ykeys: ['value'],
-								labels: ['value'],
-								parseTime: false
-							});
-						</script>
-
 					</div>
 				</div>
 				<div class="clearfix"> </div>
@@ -752,6 +729,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/bootstrap.js"></script>
 <script src="js/fetchNextWatering.js"></script>
 <script src="js/fetchWeatherForecast.js"></script>
+<script src="js/fetchHumidity.js"></script>
 
 </body>
 </html>
