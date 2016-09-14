@@ -23,90 +23,97 @@ import com.honeywell.ims.domain.RainProbability;
 @Component
 public class ForecastService {
 
-	private Logger logger = LoggerFactory.getLogger(ForecastService.class);
+    private Logger logger = LoggerFactory.getLogger(ForecastService.class);
 
-	@Autowired
-	private ForecastDao forecastDao;
+    @Autowired
+    private ForecastDao forecastDao;
 
-	public Forecast fetchForecast() {
-		logger.info("Requesting fresh forecast from URL: {} ", Constants.FORECAST_URL);
+    public Forecast fetchForecast() {
+        logger.info("Requesting fresh forecast from URL: {} ", Constants.FORECAST_URL);
 
-		RestTemplate restTemplate = new RestTemplate();
-		Forecast forecast = restTemplate.getForObject(Constants.FORECAST_URL, Forecast.class);
-		forecastDao.saveForecast(forecast);
+        RestTemplate restTemplate = new RestTemplate();
+        Forecast forecast = restTemplate.getForObject(Constants.FORECAST_URL, Forecast.class);
+        forecastDao.saveForecast(forecast);
 
-		return forecast;
-	}
+        return forecast;
+    }
 
-	public Forecast getLatestForecast() {
-		logger.info("Requesting cached forecast data");
+    public Forecast getLatestForecast() {
+        logger.info("Requesting cached forecast data");
 
-		Forecast forecast = forecastDao.getLatestForecast();
-		if (forecast == null) {
-			logger.info("Forecast not cached yet. Going for fresh one... ");
+        Forecast forecast = forecastDao.getLatestForecast();
+        if (forecast == null) {
+            logger.info("Forecast not cached yet. Going for fresh one... ");
 
-			forecast = fetchForecast();
-		}
-		return forecast;
-	}
+            forecast = fetchForecast();
+        }
+        return forecast;
+    }
 
-	/**
-	 * @return TRUE if should rain, FALSE otherwise
-	 */
-	public RainProbability getRainProbability(Settings settings) {
-		Forecast forecast = getLatestForecast();
+    /**
+     * @return TRUE if should rain, FALSE otherwise
+     */
+    public RainProbability getRainProbability(Settings settings) {
+        Forecast forecast = getLatestForecast();
 
         DateTime wateringWithDealy = new DateTime(settings.getNextWateringDate()).plusHours(settings.getDelay());
         int df = forecast.getDataList().stream()
                 .filter(x -> new DateTime(x.getDt().getTime()).isBefore(wateringWithDealy))
                 .mapToInt(x -> x.getRain().getDownfall()).sum();
-		if (df > 1) {
-            return new RainProbability(100, df);
+
+        RainProbability rp = null;
+
+        if (df > 1) {
+            rp = new RainProbability(100, df);
         } else {
-            return new RainProbability(0, df);
+            rp = new RainProbability(0, df);
         }
-	}
 
-	public List<Weather> getWeatherPercentage(Integer hours) {
-		logger.info("Requesting Weather forecast for {} hours", hours);
+        logger.info("rp prob: " + rp.getRainProbability() + " df: " + rp.getDownfall());
 
-		Forecast forecast = getLatestForecast();
-		DateTime dateTimeTo = Utils.getCurrentDateTime().plusHours(hours);
+        return rp;
+    }
 
-		Map<Integer, WeatherWrapper> mapWeather = new HashMap<>();
-		int totalCount = 0;
-		for (Data data : forecast.getDataList()) {
-			if (data.getWeathers() != null && new DateTime(data.getDt().getTime()).isBefore(dateTimeTo.toInstant())) {
-				for (Weather weather : data.getWeathers()) {
-					WeatherWrapper wrapper = mapWeather.get(weather.getId());
-					if (wrapper == null) {
-						wrapper = new WeatherWrapper(weather);
-						mapWeather.put(weather.getId(), wrapper);
-					}
-					wrapper.count++;
-					totalCount++;
-				}
-			}
-		}
+    public List<Weather> getWeatherPercentage(Integer hours) {
+        logger.info("Requesting Weather forecast for {} hours", hours);
 
-		//calculate the percentage
-		List<Weather> result = new ArrayList<>();
-		for (WeatherWrapper wr : mapWeather.values()) {
-			float proportionCorrect = ((float) wr.count) / ((float) totalCount);
-			wr.weather.setPercentage(Utils.roundFloat(proportionCorrect * 100, 2));
-			result.add(wr.weather);
-		}
-		return result;
-	}
+        Forecast forecast = getLatestForecast();
+        DateTime dateTimeTo = Utils.getCurrentDateTime().plusHours(hours);
 
-	private class WeatherWrapper {
+        Map<Integer, WeatherWrapper> mapWeather = new HashMap<>();
+        int totalCount = 0;
+        for (Data data : forecast.getDataList()) {
+            if (data.getWeathers() != null && new DateTime(data.getDt().getTime()).isBefore(dateTimeTo.toInstant())) {
+                for (Weather weather : data.getWeathers()) {
+                    WeatherWrapper wrapper = mapWeather.get(weather.getId());
+                    if (wrapper == null) {
+                        wrapper = new WeatherWrapper(weather);
+                        mapWeather.put(weather.getId(), wrapper);
+                    }
+                    wrapper.count++;
+                    totalCount++;
+                }
+            }
+        }
 
-		public WeatherWrapper(final Weather weather) {
-			this.weather = weather;
-		}
+        //calculate the percentage
+        List<Weather> result = new ArrayList<>();
+        for (WeatherWrapper wr : mapWeather.values()) {
+            float proportionCorrect = ((float) wr.count) / ((float) totalCount);
+            wr.weather.setPercentage(Utils.roundFloat(proportionCorrect * 100, 2));
+            result.add(wr.weather);
+        }
+        return result;
+    }
 
-		public Weather weather;
+    private class WeatherWrapper {
 
-		public int count;
-	}
+        public WeatherWrapper(final Weather weather) {
+            this.weather = weather;
+        }
+
+        public Weather weather;
+
+        public int count;
+    }
 }
