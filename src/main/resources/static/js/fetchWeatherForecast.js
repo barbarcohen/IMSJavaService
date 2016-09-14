@@ -1,17 +1,11 @@
 // I know this code is not beautiful, call me stupid and get over it...
 
-var weather = {city:"Default", max_temp: [0, 0, 0, 0, 0, 0], cloudsPercentage: [0, 0, 0, 0, 0, 0], clouds: ["clear-day", "clear-day", "clear-day", "clear-day", "clear-day", "clear-day", ]};
+var weather = {city:"Default", max_temp: [0, 0, 0, 0, 0, 0], cloudsPercentage: [0, 0, 0, 0, 0, 0], clouds: ["clear-day", "clear-day", "clear-day", "clear-day", "clear-day", "clear-day"]};
 
 function updateWeatherForecast() {
-    //var json = getDummyJson();
-    //obj = JSON.parse(json);
-    //var date = new Date(parseInt(obj.nextWateringDate));
-
-    var city = "Brno";
-
-    $("#weather_report_headline").text(city + " Weather Report");
-    
     parseJSON(getDummyWeatherJSON());
+    
+    $("#weather_report_headline").text(weather.city + " Weather Report");
     
     var temp_key = "_day_temp";
     var curr_temp_key;
