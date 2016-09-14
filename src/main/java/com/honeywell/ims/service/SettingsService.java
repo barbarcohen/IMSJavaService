@@ -27,7 +27,7 @@ public class SettingsService {
 
 	public Settings getSettings(final String id) {
 		Settings userSettings = settingDao.getUserSettings(id);
-		logger.info("Retrieving user settings {}", userSettings);
+		//logger.info("Retrieving user settings {}", userSettings);
 
 		return userSettings;
 	}

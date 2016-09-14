@@ -60,7 +60,7 @@ public class ForecastService {
         int df = forecast.getDataList().stream()
                 .filter(x -> new DateTime(x.getDt().getTime()).isBefore(wateringWithDealy))
                 .mapToInt(x -> x.getRain().getDownfall()).sum();
-        if (df > 1) {
+		if (df > 1) {
             return new RainProbability(100, df);
         } else {
             return new RainProbability(0, df);

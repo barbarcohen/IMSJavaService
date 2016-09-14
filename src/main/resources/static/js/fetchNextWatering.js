@@ -1,6 +1,6 @@
 
 function startCountDown() {
-     var watering_date =  new Date(parseInt(wateringData.settings.nextWateringDate));
+    var watering_date =  new Date(parseInt(wateringData.settings.nextWateringDate));
     console.log(watering_date);
     $('#example').countdown({
         date: watering_date,
@@ -14,15 +14,15 @@ function startCountDown() {
 function refreshWateringStatus(){
     if(wateringData.deviceData !== undefined){
         $("#watering_status").text(wateringData.deviceData.status);
-        var text = isRunning() ? "Stop Watering" : "Start Watering";
+        var text = isRunning() ? "Stop watering" : "Start watering";
         $('#watering_control_button').text(text);
-        console.log("changing to "+text);
+
         startCountDown()
     }
     setTimeout(refreshWateringStatus, 1000);
 }
 function isRunning(){
-    wateringData.deviceData.status === "RUNNING";
+    wateringData.deviceData.status == "RUNNING";
 }
 
 function wateringControl() {

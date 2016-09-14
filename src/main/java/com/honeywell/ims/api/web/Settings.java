@@ -28,7 +28,7 @@ public class Settings {
 
 	public static Settings createDefault() {
 		Settings settings = new Settings();
-		settings.setNextWateringDate(Utils.getCurrentDateTime().plusHours(1).toDate());
+		settings.setNextWateringDate(Utils.getCurrentDateTime().plusMinutes(1).toDate());
 		settings.setDelay(1);
 		settings.setWateringDuration(5);
 		settings.setMinHumidityThreshold(10);

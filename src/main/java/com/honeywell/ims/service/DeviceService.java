@@ -44,7 +44,7 @@ public class DeviceService {
 		DeviceData deviceData = sensorData.convertToDeviceData();
 		deviceDao.saveDeviceData(deviceData);
 
-		logger.info("Requesting fresh device data {}", deviceData);
+		//logger.info("Requesting fresh device data {}", deviceData);
 
 		return deviceData;
 	}
