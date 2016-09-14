@@ -13,7 +13,9 @@ public class Settings {
 
 	//date
 	private Date nextWateringDate;
+
 	private int nextWaterigSeconds;
+
 	//seconds
 	private int delay;
 
@@ -26,6 +28,8 @@ public class Settings {
 
 	private int forecastHours;
 
+	private String forecastLocationId;
+
 	public static Settings createDefault() {
 		Settings settings = new Settings();
 		settings.setNextWateringDate(Utils.getCurrentDateTime().plusMinutes(1).toDate());
@@ -33,7 +37,16 @@ public class Settings {
 		settings.setWateringDuration(5);
 		settings.setMinHumidityThreshold(10);
 		settings.setForecastHours(24);
+		settings.setForecastLocationId("3078610");
 		return settings;
+	}
+
+	public String getForecastLocationId() {
+		return forecastLocationId;
+	}
+
+	public void setForecastLocationId(final String forecastLocationId) {
+		this.forecastLocationId = forecastLocationId;
 	}
 
 	public int getForecastHours() {
@@ -104,12 +117,14 @@ public class Settings {
 	public String toString() {
 		return "Settings{" +
 			"deviceId='" + deviceId + '\'' +
-			", nextWatering=" + nextWateringDate +
+			", nextWateringDate=" + nextWateringDate +
+			", nextWaterigSeconds=" + nextWaterigSeconds +
 			", delay=" + delay +
 			", wateringDuration=" + wateringDuration +
 			", minHumidityThreshold=" + minHumidityThreshold +
 			", forceIrrigation=" + forceIrrigation +
 			", forecastHours=" + forecastHours +
+			", forecastLocationId='" + forecastLocationId + '\'' +
 			'}';
 	}
 }

@@ -2,6 +2,7 @@
 function startCountDown() {
     var watering_date =  new Date(parseInt(wateringData.settings.nextWateringDate));
     console.log(watering_date);
+
     $('#example').countdown({
         date: watering_date,
         offset: -8,

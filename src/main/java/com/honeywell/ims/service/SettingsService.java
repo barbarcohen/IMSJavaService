@@ -18,11 +18,16 @@ public class SettingsService {
 	@Autowired
 	private SettingsDao settingDao;
 
+	@Autowired
+	private ForecastService forecastService;
+
 	private Logger logger = LoggerFactory.getLogger(SettingsService.class);
 
 	public void saveSettings(final Settings settings) {
 		logger.info("Saving user settings {}", settings);
 		settingDao.saveSettings(settings);
+		forecastService.fetchForecast();
+
 	}
 
 	public Settings getSettings(final String id) {
