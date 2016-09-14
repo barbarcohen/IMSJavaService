@@ -56,8 +56,15 @@ public class ForecastService {
 	public RainProbability getRainProbability(Settings settings) {
 		Forecast forecast = getLatestForecast();
 
-		//TODO get from foreccaast data
-		return new RainProbability(50, 10);
+        DateTime wateringWithDealy = new DateTime(settings.getNextWateringDate()).plusHours(settings.getDelay());
+        int df = forecast.getDataList().stream()
+                .filter(x -> new DateTime(x.getDt().getTime()).isBefore(wateringWithDealy))
+                .mapToInt(x -> x.getRain().getDownfall()).sum();
+        if (df > 1) {
+            return new RainProbability(100, df);
+        } else {
+            return new RainProbability(0, df);
+        }
 	}
 
 	public List<Weather> getWeatherPercentage(Integer hours) {
