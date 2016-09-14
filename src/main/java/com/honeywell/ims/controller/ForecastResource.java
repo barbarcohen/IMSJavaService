@@ -26,11 +26,18 @@ public class ForecastResource {
 	private SettingsService settingsService;
 
 	@RequestMapping("/actual")
-	public Forecast getAll() {
+	public Forecast getActual() {
 		Forecast forecast = forecastService.getLatestForecast();
 		if (forecast == null) {
 			forecast = forecastService.fetchForecast();
 		}
+		return forecast;
+	}
+
+	@RequestMapping("/refresh")
+	public Forecast refresh() {
+		Forecast forecast = forecastService.fetchForecast();
+
 		return forecast;
 	}
 

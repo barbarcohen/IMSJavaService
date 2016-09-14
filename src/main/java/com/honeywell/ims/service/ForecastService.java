@@ -60,7 +60,7 @@ public class ForecastService {
 	}
 
 	public List<Weather> getWeatherPercentage(Integer hours) {
-		logger.info("Requesting Weather forecast for {} days", hours);
+		logger.info("Requesting Weather forecast for {} hours", hours);
 
 		Forecast forecast = getLatestForecast();
 		DateTime dateTimeTo = Utils.getCurrentDateTime().plusHours(hours);

@@ -1,4 +1,16 @@
-var wateringStatus = false;
+var wateringData = {};
+
+//refreshing watering data every 2 seconds
+function refreshWateringData(){
+    $.ajax({
+        dataType: "json",
+        url: "/control/status"
+    }).success(function(data) {
+        wateringData = data;
+        //updateNextWatering();
+        setTimeout(refreshWateringData, 1000);
+    });
+}
 
 function startCountDown(watering_date) {
     $('#example').countdown({
@@ -43,10 +55,6 @@ function wateringControl() {
     });
 }
 
-function getDummyJson() {
-    return '{"nextWateringDate":1473855868000,"status":"on"}';
-}
-
 function updateNextWatering() {
     var json = getWateringJson(function(obj){
         var date = new Date(parseInt(obj.settings.nextWatering));
@@ -65,4 +73,7 @@ function updateNextWatering() {
 };
 
 
-$(document).ready(updateNextWatering());
+$(document).ready(function(){
+    //updateNextWatering();
+    refreshWateringData();
+});
