@@ -62,7 +62,7 @@ public class ForecastService {
 	 */
 	public RainProbability getRainProbability(Settings settings) {
 		Forecast forecast = getLatestForecast();
-		int deleyValueInDays = 3;
+		int deleyValueInDays = 1;
 		DateTime wateringWithDealy = new DateTime(settings.getNextWateringDate()).plusDays(deleyValueInDays);
 		double df = forecast.getDataList().stream()
 			.filter(x -> new DateTime(x.getDt().getTime()).isBefore(wateringWithDealy))

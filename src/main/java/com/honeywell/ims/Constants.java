@@ -14,7 +14,7 @@ public interface Constants {
 
 	int DEVICE_CHECK_RATE = 1 * 1 * 1000;//1sec
 
-	int WATERING_CHECK_RATE = 1 * 60 * 1000;//1 minutes
+	int WATERING_CHECK_RATE = 1 * 5 * 1000;//1 minutes
 
 	int WATERING_TIME_THRESHOLD = 0 * 60 * 1000;//1 minute
 

@@ -39,7 +39,7 @@ public class SettingsService {
 
 	public Settings resetWateringTime(final String id){
 		Settings settings = getSettings(id);
-		DateTime newDate = new DateTime(settings.getNextWateringDate()).plusHours(settings.getDelay());
+		DateTime newDate = new DateTime(settings.getNextWateringDate()).plusSeconds(settings.getDelay());
 		settings.setNextWateringDate(newDate.toDate());
 		saveSettings(settings);
 		return settings;
