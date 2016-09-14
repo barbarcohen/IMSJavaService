@@ -395,7 +395,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <tr>
 
                                     <td width="33%">
-                                        <button align="right" onclick="wateringControl()" id="watering_control_button">Start Watering</button>
+                                        <button align="right" onclick="wateringControl()" id="watering_control_button" style="background-color:#00bcd4;">Start Watering</button>
                                     </td>
                                     <td width="33%">
                                         <h3 class="title">Watering status: <span id="watering_status">STOPPED</span></h3>
@@ -527,135 +527,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="col-md-8 agile-left">
 					<div class="agile-bottom-grid">
 						<div class="area-grids-heading">
-							<h3>Average Percipitation [mm] by month</h3>
+							<h3>Soil Humidity [%]</h3>
 						</div>
 						<div id="graph1"></div>
 					</div>
 				</div>
-				<div class="clearfix"> </div>
-			</div>
-			
-			<div class="agile-bottom-grids">
-				<div class="col-md-6 agile-bottom-right">
-					<div class="agile-bottom-grid">
-						<div class="area-grids-heading">
-							<h3>Cumulative Savings [000' $]</h3>
-						</div>
-						<div id="graph6"></div>
-						<script>
-						// Use Morris.Bar
-						Morris.Bar({
-						  element: 'graph6',
-						  data: [
-							{x: '2014 Q3', y: 10},
-							{x: '2014 Q4', y: 10},
-							{x: '2015 Q1', y: 20},
-							{x: '2015 Q2', y: 30},
-							{x: '2015 Q3', y: 40},
-							{x: '2015 Q4', y: 50},
-							{x: '2016 Q1', y: 60},
-							{x: '2016 Q2', y: 70},
-							{x: '2016 Q3', y: 80}
-						  ],
-						  xkey: 'x',
-						  ykeys: ['y'],
-						  labels: ['Y'],
-						  barColors: function (row, series, type) {
-							if (type === 'bar') {
-							  var red = Math.ceil(255 * row.y / this.ymax);
-							  return 'rgb(' + red + ',0,0)';
-							}
-							else {
-							  return '#000';
-							}
-						  }
-						});
-						</script>
-					</div>
-				</div>
-				<div class="col-md-6 agile-bottom-left">
-					<div class="agile-bottom-grid">
-						<div class="area-grids-heading">
-							<h3>Crop health</h3>
-						</div>
-						<div id="graph5"></div>
-						<script>
-						// Use Morris.Bar
-						Morris.Bar({
-						  element: 'graph5',
-						  data: [
-							{x: '2015 Q4', y: 3, z: 2, a: 3},
-							{x: '2016 Q1', y: 2, z: null, a: 1},
-							{x: '2016 Q2', y: 0, z: 2, a: 4},
-							{x: '2016 Q3', y: 2, z: 4, a: 3}
-						  ],
-						  xkey: 'x',
-						  ykeys: ['y', 'z', 'a'],
-						  labels: ['Y', 'Z', 'A'],
-						  stacked: true
-						});
-						</script>
-					</div>
-				</div>
-				<div class="clearfix"> </div>
-			</div>
-			<div class="agile-last-grids">
-				<div class="col-md-4 agile-last-left">
-					<div class="agile-last-grid">
-						<div class="area-grids-heading">
-							<h3>Percipitation vs Rain</h3>
-						</div>
-						<div id="graph7"></div>
-						<script>
-						// This crosses a DST boundary in the UK.
-						Morris.Area({
-						  element: 'graph7',
-						  data: [
-							{x: '2013-03-30 22:00:00', y: 3, z: 3},
-							{x: '2013-03-31 00:00:00', y: 2, z: 0},
-							{x: '2013-03-31 02:00:00', y: 0, z: 2},
-							{x: '2013-03-31 04:00:00', y: 4, z: 4}
-						  ],
-						  xkey: 'x',
-						  ykeys: ['y', 'z'],
-						  labels: ['Y', 'Z']
-						});
-						</script>
-
-					</div>
-				</div>
-				<div class="col-md-4 agile-last-left agile-last-middle">
-					<div class="agile-last-grid">
-						<div class="area-grids-heading">
-							<h3>Average Sunshine Hours by Month</h3>
-						</div>
-						<div id="graph8"></div>
-						<script>
-						/* data stolen from http://howmanyleft.co.uk/vehicle/jaguar_'e'_type */
-						var day_data = [
-						  {"period": "2016-10-01", "licensed": 3407, "sorned": 660},
-						  {"period": "2016-09-30", "licensed": 3351, "sorned": 629},
-						  {"period": "2016-09-29", "licensed": 3269, "sorned": 618},
-						  {"period": "2016-09-20", "licensed": 3246, "sorned": 661},
-						  {"period": "2016-09-19", "licensed": 3257, "sorned": 667},
-						  {"period": "2016-09-18", "licensed": 3248, "sorned": 627},
-						  {"period": "2016-09-17", "licensed": 3171, "sorned": 660},
-						  {"period": "2016-09-16", "licensed": 3171, "sorned": 676},
-						  {"period": "2016-09-15", "licensed": 3201, "sorned": 656},
-						  {"period": "2016-09-10", "licensed": 3215, "sorned": 622}
-						];
-						Morris.Bar({
-						  element: 'graph8',
-						  data: day_data,
-						  xkey: 'period',
-						  ykeys: ['licensed', 'sorned'],
-						  labels: ['Licensed', 'SORN'],
-						  xLabelAngle: 60
-						});
-						</script>
-					</div>
-				</div>
-
 				<div class="clearfix"> </div>
 			</div>
             
@@ -726,7 +602,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<!-- footer -->
 		<div class="footer">
-			<p>© 2016 Colored . All Rights Reserved.</p>
+			<p>© 2016 Irrigation Management System . All Rights Reserved.</p>
 		</div>
 		<!-- //footer -->
 	</section>
