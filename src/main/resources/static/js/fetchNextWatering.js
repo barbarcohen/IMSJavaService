@@ -1,4 +1,16 @@
-var wateringStatus = false;
+var wateringData = {};
+
+//refreshing watering data every 2 seconds
+function refreshWateringData(){
+    $.ajax({
+        dataType: "json",
+        url: "/control/status"
+    }).success(function(data) {
+        wateringData = data;
+        //updateNextWatering();
+        setTimeout(refreshWateringData, 1000);
+    });
+}
 
 function startCountDown(watering_date) {
     $('#example').countdown({
@@ -11,13 +23,13 @@ function startCountDown(watering_date) {
     });
 }
 
-function getWateringJson() {
+function getWateringJson(callback) {
     $.ajax({
         type: "GET",
         dataType: "json",
         url: "/control/status",
-        success: function() {
-            return data;
+        success: function(data) {
+            callback(data)
         }
     });
 }
@@ -35,33 +47,33 @@ function wateringControl() {
         type: "PUT",
         dataType: "json",
         url: controlURL,
-        success: function() {
-            $('#watering_control_button').text(watering ? "Stop Watering" : "Start Watering");
-            alert("Switched the watering " + (watering ? "on" : "off"));
+        success: function(result) {
+            $('#watering_control_button').text(wateringStatus ? "Stop Watering" : "Start Watering");
+            alert("Switched the watering " + (wateringStatus ? "on" : "off"));
             wateringStatus = !wateringStatus;
         }
     });
 }
 
-function getDummyJson() {
-    return '{"nextWateringDate":1473855868000,"status":"on"}';
-}
-
 function updateNextWatering() {
-    var json = getWateringJson();
-    
-    obj = JSON.parse(json);
-    
-    var date = new Date(parseInt(obj.nextWateringDate));
-    if(obj.status === "running"){
-        wateringStatus = true;
-    } else {
-        wateringStatus = false;
-    }
+    var json = getWateringJson(function(obj){
+        var date = new Date(parseInt(obj.settings.nextWatering));
+        //FIXME fetch wattering status periodically in different call
+        if(obj.deviceData.status === "RUNNING"){
+            wateringStatus = true;
+        } else {
+            wateringStatus = false;
+        }
 
-    startCountDown(date);
-    $("#watering_status").text("Watering: " + obj.status);
+        startCountDown(date);
+        $("#watering_status").text("Watering: " + obj.deviceData.status);
+    });
+    
+
 };
 
 
-$(document).ready(updateNextWatering());
+$(document).ready(function(){
+    //updateNextWatering();
+    refreshWateringData();
+});

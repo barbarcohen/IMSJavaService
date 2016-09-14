@@ -7,6 +7,10 @@ public class WateringCommand {
 
 	private long duration;
 
+	public static WateringCommand create(long duration) {
+		return new WateringCommand(duration);
+	}
+
 	public WateringCommand() {
 	}
 

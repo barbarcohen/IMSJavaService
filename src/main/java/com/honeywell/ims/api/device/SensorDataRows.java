@@ -7,25 +7,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class SensorDataRows {
 
-	@JsonProperty(value = "Hum")
-	private double humidity;
+	@JsonProperty(value = "doc")
+	private SensorDataDoc documentData;
 
-	@JsonProperty(value = "IsRunning")
-	private boolean isRunning;
-
-	public double getHumidity() {
-		return humidity;
+	public SensorDataDoc getDocumentData() {
+		return documentData;
 	}
 
-	public void setHumidity(final double humidity) {
-		this.humidity = humidity;
+	public void setDocumentData(final SensorDataDoc documentData) {
+		this.documentData = documentData;
 	}
 
-	public boolean isRunning() {
-		return isRunning;
-	}
-
-	public void setIsRunning(final boolean isRunning) {
-		this.isRunning = isRunning;
+	@Override
+	public String toString() {
+		return "SensorDataRows{" +
+			"documentData=" + documentData +
+			'}';
 	}
 }

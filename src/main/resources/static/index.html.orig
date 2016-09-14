@@ -96,16 +96,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<a href="javascript:;">
 				<i class="fa fa-check-square-o nav_icon"></i>
 				<span class="nav-text">
-				Forms
+				Settings
 				</span>
 				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="inputs.html">Inputs</a>
+						<a class="subnav-text" href="inputs.html">Irrigation Settings</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="validation.html">Form Validation</a>
+						<a class="subnav-text" href="validation.html">Connection Settings</a>
 					</li>
 				</ul>
 			</li>
@@ -523,6 +523,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="area-grids-heading">
 							<h3>Average Percipitation [mm] by month</h3>
 						</div>
+<<<<<<< HEAD
+						<div id="graph1"></div>
+
+=======
 						<div id="graph9"></div>
 						<script>
 							var day_data = [
@@ -546,6 +550,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								parseTime: false
 							});
 						</script>
+>>>>>>> 67dd2c261a9798821863eb00b3d9ed3671e356c7
 
 					</div>
 				</div>
@@ -752,6 +757,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/bootstrap.js"></script>
 <script src="js/fetchNextWatering.js"></script>
 <script src="js/fetchWeatherForecast.js"></script>
+<script src="js/fetchHumidity.js"></script>
 
 </body>
 </html>

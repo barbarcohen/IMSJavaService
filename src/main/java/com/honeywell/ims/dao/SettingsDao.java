@@ -2,7 +2,7 @@ package com.honeywell.ims.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.honeywell.ims.domain.UserSettings;
+import com.honeywell.ims.api.web.Settings;
 
 /**
  * Created by h134602 on 9/13/2016.
@@ -10,14 +10,13 @@ import com.honeywell.ims.domain.UserSettings;
 @Repository
 public class SettingsDao {
 
-	//simullate database
-	private UserSettings userSettings = UserSettings.createDefault();
+	private Settings userSettings = Settings.createDefault();
 
-	public void saveSettings(final UserSettings settings) {
+	public void saveSettings(final Settings settings) {
 		this.userSettings = settings;
 	}
 
-	public UserSettings getUserSettings(final String id){
+	public Settings getUserSettings(final String id){
 		return userSettings;
 	}
 }

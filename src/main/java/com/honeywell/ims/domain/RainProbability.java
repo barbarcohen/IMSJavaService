@@ -20,4 +20,12 @@ public class RainProbability {
 	public int getDownfall() {
 		return downfall;
 	}
+
+	@Override
+	public String toString() {
+		return "RainProbability{" +
+			"rainProbability=" + rainProbability +
+			", downfall=" + downfall +
+			'}';
+	}
 }

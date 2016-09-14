@@ -1,5 +1,7 @@
 package com.honeywell.ims.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,12 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.honeywell.ims.api.WateringData;
 import com.honeywell.ims.api.web.Command;
+import com.honeywell.ims.api.web.DeviceData;
 import com.honeywell.ims.api.web.Settings;
-import com.honeywell.ims.api.web.Watering;
+import com.honeywell.ims.service.DeviceService;
 import com.honeywell.ims.service.ScheduleService;
 import com.honeywell.ims.service.SettingsService;
-import com.honeywell.ims.service.WateringService;
 
 /**
  * Created by h134602 on 9/12/2016. API for providing end user data (WEB or mobile app)
@@ -22,17 +25,22 @@ import com.honeywell.ims.service.WateringService;
 public class WebResource {
 
 	@Autowired
-	private WateringService wateringService;
-
-	@Autowired
 	private ScheduleService scheduleService;
 
 	@Autowired
 	private SettingsService settingsService;
 
+	@Autowired
+	private DeviceService deviceService;
+
+	private Logger logger = LoggerFactory.getLogger(WebResource.class);
+
 	@RequestMapping("/status")
-	public Watering getStatusData() {
-		return wateringService.getWateringStatus();
+	public WateringData getStatusData() {
+		logger.info("Requesting watering status: {} ");
+		DeviceData deviceData = deviceService.getDeviceData(null);
+		Settings settings = settingsService.getSettings(null);
+		return WateringData.create(settings, deviceData);
 	}
 
 	@RequestMapping(value = "/settings", method = RequestMethod.POST)
@@ -47,9 +55,13 @@ public class WebResource {
 
 	@RequestMapping(method = RequestMethod.PUT, value = "/{cmd}")
 	public Command command(@PathVariable(value = "cmd") String cmd) {
-		boolean isSuccess = wateringService.runCommand(cmd);
+		boolean isSuccess = deviceService.runCommand(cmd);
 		return Command.result(cmd, isSuccess);
 	}
 
+	@RequestMapping("/dummy")
+	public void dummyWattering() {
+		scheduleService.checkForWatering();
+	}
 
 }

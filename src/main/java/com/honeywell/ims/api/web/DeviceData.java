@@ -7,18 +7,18 @@ import com.honeywell.ims.enums.WateringStatus;
 /**
  * Created by h134602 on 9/12/2016.
  */
-public class Watering {
-
-	private Date nextWateringDate;
+public class DeviceData {
 
 	private WateringStatus status;
 
-	public Date getNextWateringDate() {
-		return nextWateringDate;
+	private double humidity;
+
+	public double getHumidity() {
+		return humidity;
 	}
 
-	public void setNextWateringDate(final Date nextWateringDate) {
-		this.nextWateringDate = nextWateringDate;
+	public void setHumidity(final double humidity) {
+		this.humidity = humidity;
 	}
 
 	public WateringStatus getStatus() {
@@ -31,9 +31,9 @@ public class Watering {
 
 	@Override
 	public String toString() {
-		return "Watering{" +
-			"nextWateringDate=" + nextWateringDate +
-			", status=" + status +
+		return "DeviceData{" +
+			"status=" + status +
+			", humidity=" + humidity +
 			'}';
 	}
 }
