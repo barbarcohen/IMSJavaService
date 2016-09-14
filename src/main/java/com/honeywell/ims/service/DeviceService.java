@@ -102,7 +102,6 @@ public class DeviceService {
 		if (isSuccess) {
 			//update the status
 			deviceData.setStatus(WateringStatus.RUNNING);
-			settingsService.resetWateringTime(null);
 			deviceDao.saveDeviceData(deviceData);
 		}
 		return isSuccess;

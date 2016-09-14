@@ -406,11 +406,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 </tr>
                             </table>
 							<ul id="example">
-								<li><span class="hours" id="hours_count">00</span><p class="hours_text">Hours</p></li>
+								<li><span id="hours"></span></li>
+								<!--<li><span class="hours" id="hours_count">00</span><p class="hours_text">Hours</p></li>
 								<li class="seperator">:</li>
 								<li><span class="minutes" id="minutes_count">00</span><p class="minutes_text">Minutes</p></li>
 								<li class="seperator">:</li>
 								<li><span class="seconds" id="seconds_count">00</span><p class="seconds_text">Seconds</p></li>
+								-->
 							</ul>
 							<div class="clearfix"> </div>
 							<script type="text/javascript" src="js/jquery.countdown.min.js"></script>
@@ -613,10 +615,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}).success(function(data) {
 			wateringData = data;
 			//updateNextWatering();
+
 			setTimeout(refreshWateringData, 1000);
 		});
 	}
+
 	refreshWateringData();
+
 </script>
 </body>
 </html>

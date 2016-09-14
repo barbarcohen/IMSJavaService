@@ -2,10 +2,11 @@
 function startCountDown() {
     var watering_date =  new Date(parseInt(wateringData.settings.nextWateringDate));
     console.log(watering_date);
-    
-    $('#hours_count').text(watering_date.getHours());
-    $('#minutes_count').text(watering_date.getMinutes());
-    $('#seconds_count').text(watering_date.getSeconds());
+    $('#hours').text(wateringData.settings.nextWateringDateText);
+
+    //$('#hours_count').text(watering_date.getHours());
+    //$('#minutes_count').text(watering_date.getMinutes());
+    //$('#seconds_count').text(watering_date.getSeconds());
     
     /*$('#example').countdown({
         date: watering_date,

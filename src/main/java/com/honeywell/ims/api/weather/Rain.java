@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Rain {
 
 	@JsonProperty(value="3h")
-	private int downfall = 0;
+	private double downfall = 0;
 
-	public int getDownfall() {
+	public double getDownfall() {
 		return downfall;
 	}
 
-	public void setDownfall(final int downfall) {
+	public void setDownfall(final double downfall) {
 		this.downfall = downfall;
 	}
 }

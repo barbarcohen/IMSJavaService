@@ -6,9 +6,9 @@ package com.honeywell.ims.domain;
 public class RainProbability {
 
 	private int rainProbability;
-	private int downfall;
+	private double downfall;
 
-	public RainProbability(final int rainProbability, final int downfall) {
+	public RainProbability(final int rainProbability, final double downfall) {
 		this.rainProbability = rainProbability;
 		this.downfall = downfall;
 	}
@@ -17,7 +17,7 @@ public class RainProbability {
 		return rainProbability;
 	}
 
-	public int getDownfall() {
+	public double getDownfall() {
 		return downfall;
 	}
 

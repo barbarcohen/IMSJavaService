@@ -29,6 +29,9 @@ public class ScheduleService {
 	private IrrigationService irrigationService;
 
 	@Autowired
+	private SettingsService settingsService;
+
+	@Autowired
 	private DeviceService deviceService;
 
 	@Autowired
@@ -84,6 +87,8 @@ public class ScheduleService {
 				deviceService.runCommand(Command.off.getValue());
 			}
 		}
+		settingsService.resetWateringTime(null);
+
 	}
 
 	/**
@@ -96,6 +101,7 @@ public class ScheduleService {
 			logger.warn("UserDate is null, cant water");
 			return false;
 		}
+		//FIXME
 		boolean result = userWateringDate.getTime() + Constants.WATERING_TIME_THRESHOLD > currentDate.getTime() || userWateringDate.getTime() <= currentDate.getTime();
 		logger.info("Is the time for watering? {} (time remaining: {})", result, currentDate.getTime() - userWateringDate.getTime());
 		return result;

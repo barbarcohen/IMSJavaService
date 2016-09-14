@@ -1,18 +1,25 @@
-var dummyData = '{"settings":{"deviceId":null,"nextWatering":1473834845516,"delay":1,"wateringDuration":5,"minHumidityThreshold":10,"forceIrrigation":false,"forecastHours":24},"deviceData":{"status":"STOPPED","humidity":0.0}}';
+//refreshing watering data every 2 seconds
+var wateringData = {};
 
-function getIrrigationSettingsData(){
-    return dummyData;
+function refreshWateringData(){
+    $.ajax({
+        dataType: "json",
+        url: "/control/status"
+    }).success(function(data) {
+        wateringData = data;
+        //updateNextWatering();
+        setIrrigationData();
+        setTimeout(refreshWateringData, 1000);
+    });
 }
 
 function setIrrigationData(){
-    var irrSettJSON = JSON.parse(getIrrigationSettingsData());
-    var nextWatering = new Date(irrSettJSON.settings.nextWatering);
-    $("#td_11").text(nextWatering.toLocaleTimeString());
-    $("#td_12").text(irrSettJSON.settings.delay);
-    $("#td_13").text(irrSettJSON.settings.wateringDuration);
-    $("#td_14").text(irrSettJSON.settings.forceIrrigation);
-    $("#td_15").text(irrSettJSON.settings.minHumidityThreshold);
+    $("#td_11").text(wateringData.settings.nextWateringDateText);
+    $("#td_12").text(wateringData.settings.delay);
+    $("#td_13").text(wateringData.settings.wateringDuration);
+    $("#td_14").text(wateringData.settings.forceIrrigation);
+    $("#td_15").text(wateringData.settings.minHumidityThreshold);
 }
 
 
-$(document).ready(setIrrigationData());
+$(document).ready(refreshWateringData());

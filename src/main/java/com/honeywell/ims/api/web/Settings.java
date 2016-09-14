@@ -1,6 +1,9 @@
 package com.honeywell.ims.api.web;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.apache.commons.lang3.time.DateUtils;
 
 import com.honeywell.ims.service.Utils;
 
@@ -13,6 +16,7 @@ public class Settings {
 
 	//date
 	private Date nextWateringDate;
+	private String nextWateringDateText;
 
 	private int nextWaterigSeconds;
 
@@ -71,6 +75,9 @@ public class Settings {
 
 	public void setNextWateringDate(final Date nextWateringDate) {
 		this.nextWateringDate = nextWateringDate;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.nextWateringDateText = format.format(nextWateringDate);
+
 	}
 
 	public int getNextWaterigSeconds() {
@@ -111,6 +118,14 @@ public class Settings {
 
 	public void setDelay(final int delay) {
 		this.delay = delay;
+	}
+
+	public String getNextWateringDateText() {
+		return nextWateringDateText;
+	}
+
+	public void setNextWateringDateText(final String nextWateringDateText) {
+		this.nextWateringDateText = nextWateringDateText;
 	}
 
 	@Override
