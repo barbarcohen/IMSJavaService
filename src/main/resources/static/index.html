@@ -96,16 +96,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<a href="javascript:;">
 				<i class="fa fa-check-square-o nav_icon"></i>
 				<span class="nav-text">
-				Forms
+				Settings
 				</span>
 				<i class="icon-angle-right"></i><i class="icon-angle-down"></i>
 				</a>
 				<ul>
 					<li>
-						<a class="subnav-text" href="inputs.html">Inputs</a>
+						<a class="subnav-text" href="inputs.html">Irrigation Settings</a>
 					</li>
 					<li>
-						<a class="subnav-text" href="validation.html">Form Validation</a>
+						<a class="subnav-text" href="validation.html">Connection Settings</a>
 					</li>
 				</ul>
 			</li>
@@ -521,38 +521,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<h3>Percipitation [mm] (blue), sunshine [hours/ day] (yellow)</h3>
 						</div>
 						<div id="graph1"></div>
-						<script>
-						var nReloads = 0;
-						function data(offset) {
-						  var ret = [];
-						  for (var x = 0; x <= 360; x += 10) {
-							var v = (offset + x) % 360;
-							ret.push({
-							  x: x,
-							  y: Math.sin(Math.PI * v / 180).toFixed(4),
-							  z: Math.cos(Math.PI * v / 180).toFixed(4)
-							});
-						  }
-						  return ret;
-						}
-						var graph = Morris.Line({
-							element: 'graph1',
-							data: data(0),
-							xkey: 'x',
-							ykeys: ['y', 'z'],
-							labels: ['sin()', 'cos()'],
-							parseTime: false,
-							ymin: -1.0,
-							ymax: 1.0,
-							hideHover: true
-						});
-						function update() {
-						  nReloads++;
-						  graph.setData(data(5 * nReloads));
-						  $('#reloadStatus').text(nReloads + ' reloads');
-						}
-						setInterval(update, 1000);
-						</script>
+
 
 					</div>
 					<!-- //updating-data -->
@@ -790,6 +759,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="js/bootstrap.js"></script>
 <script src="js/fetchNextWatering.js"></script>
 <script src="js/fetchWeatherForecast.js"></script>
+<script src="js/fetchHumidity.js"></script>
 
 </body>
 </html>
