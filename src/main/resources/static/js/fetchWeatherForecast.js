@@ -9,12 +9,7 @@ function updateWeatherForecast() {
 
     var city = "Brno";
 
-    $("#city_weather_report").text(city + " Weather Report");
-
-    var weatherCanvas = $('<canvas/ id = "clear-day">', {
-        'id': 'clear-day'
-    }).width(40).height(40);
-    $("#some_li").prepend('<figure class="icons"><canvas id="snow" width="40" height="40"></canvas></figure>');
+    $("#weather_report_headline").text(city + " Weather Report");
     
     parseJSON(getDummyWeatherJSON());
     
@@ -25,8 +20,8 @@ function updateWeatherForecast() {
         $(curr_temp_key).text(weather.max_temp[i] + " °C");
     }
     
-    var weatherListNextDays = weather.clouds.slice(1,6); // ["clear-day", "clear-day", "clear-day", "clear-day", "clear-day", "clear-day", "clear-day", "clear-day", ];//[weather.clouds.slice(0,1)];
-    var weatherListTomorrow = weather.clouds.slice(0,1); //[weather.clouds.slice(1,6)];
+    var weatherListNextDays = weather.clouds.slice(1,6); 
+    var weatherListTomorrow = weather.clouds.slice(0,1);
     
     console.log(weatherListTomorrow + "\n" + weatherListNextDays);
     renderWeatherIcons(weatherListTomorrow, weatherListNextDays);
